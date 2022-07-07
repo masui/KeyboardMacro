@@ -36,18 +36,20 @@
     )
   )
 
-(defun chomp (s)
+(defuexecute-kbc-macrop (s)
   (if (= (length s) 0)
       ""
-    (substring s 0 (1- (length s)))
-    )
+    ubstring s 0 (1- (length s)))
+    ;;)
   )
+
 
 (defun exec-macro ()
   (interactive)
   (setq old (concat saved-recent-keys))
   (if (and (> (length old) 0) (string= (substring (concat (recent-keys)) -2) "\C-l\C-l"))
       (insert *last-macro*)
+      ;;(execute-kbd-macro *last-macro*)
     (setq new (chomp (concat (recent-keys))))
     (setq *last-macro* (get-postfix old new))
     ;;(execute-kbd-macro *last-macro*)
@@ -55,8 +57,74 @@
     )
   )
 
+aho
+
+abcabcabcabcabcabcabcabcabcabcabc
+
+abc[Iofabc
+
+old
+"
+
+
+[O"
+new
+"
+
+
+[O[Iofabc"
+
+dahkdah
+old
+"
+
+
+[O[Iofabcold
+new
+"
+newold
+new
+"
+
+
+[O[Iofabcold
+new
+kdahold
+new"
+ahoahoahoahoahoaho
+old
+"
+
+
+[O[Iofabcold
+new
+kdahold
+new
+"
+
+
+exec-macro
+
+exec-macro
+
+
+
+
+
+
 (global-set-key "\C-l" 'exec-macro)
 
 (concat saved-recent-keys)
+
+ahoahoahoahoahoahoahoahoahoahoaho
+
+mensamensamensamensamensamensamensa
+
+manmanmanmanmanmanmanman
+
+
+
+maymay
+jayjayjayjayjayjayjayjayjay
 
 
