@@ -12,7 +12,7 @@
 (defun exec-macro ()
   (interactive)
   (setq old (concat saved-recent-keys))
-  (if (and (> (length old) 0) (string= (substring old -1) "\C-l"))
+  (if (and (> (length old) 0) (string= (substring (concat (recent-keys)) -2) "\C-l\C-l"))
       (execute-kbd-macro *last-macro*)
     (setq new (concat (recent-keys)))
     (setq new (substring new 0 (1- (length new))))
@@ -25,10 +25,92 @@
 	  (setq finished t))
       (setq i (1+ i))
       )
-    ;;(substring new (- i))
-    (setq *last-macro* (substring new (- (- i 1))))
-    (execute-kbd-macro *last-macro*)
+    (if finished
+	(progn
+	  (setq *last-macro* (substring new (- (- i 1))))
+	  (execute-kbd-macro *last-macro*)
+	  )
+      (setq *last-macro* "")
+      )
     )
   )
 
+
 (global-set-key "\C-l" 'exec-macro)
+
+
+
+aho
+
+
+
+
+old
+"
+
+(concat (recent-kesys(()))
+
+
+"
+
+
+new
+"(concat (recent-kesys(()))
+
+
+aho"
+
+
+
+(concat (recent-keys))
+
+
+(setq i 3)
+
+(setq x (substring new 0 (- (length new) i)))
+"(concat (recent-kesys(()))
+
+
+aho"
+
+
+(setq y (substring old (- (length x))))
+
+
+
+(substring new (- i))
+
+
+*last-macro*
+
+
+(string= x y)
+t
+
+
+
+
+;;;;;;;;;;;
+(concat saved-recent-keys)
+
+;;;;;;;;;;;
+(concat (recent-keys))
+
+
+def(setq new "abcdefghij")
+"abcdefghij"
+
+(setq new (substring new 0 (1- (length new))))
+"abcdefghij"
+
+(setq newlen (length new))
+(setq x (substring new 0 (- newlen i)))
+"abcdefg"
+
+
+(setq i 3)
+(substring new (- (- i 1)))
+"ij"
+
+
+
