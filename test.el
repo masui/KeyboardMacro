@@ -26,7 +26,42 @@
     )
   )
 
-(get-postfix "xxabcdef" "abcdefghi")
+(defun chomp (s)
+  (if (= (length s) 0)
+      ""
+    (substring s 0 (1- (length s)))
+    )
+  )
+
+(and
+ (string= (get-postfix "xx" "yy") "")
+ (string= (get-postfix "xyz" "yzwu") "wu")
+ (string= (get-postfix "xyzabc" "abcdefg") "defg")
+ (string= (get-postfix "abc" "abcdefg") "defg")
+ (string= (get-postfix "abckkk" "abcdefg") "")
+ (string= (get-postfix "xxabcdef" "abcdefghi") "ghi")
+ (string= (chomp "") "")
+ (string= (chomp "xyz") "xy")
+ )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
 
 
 
