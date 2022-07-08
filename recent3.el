@@ -36,11 +36,20 @@
     )
   )
 
-(defuexecute-kbc-macrop (s)
+(defun execute-kbc-macrop (s)
   (if (= (length s) 0)
       ""
-    ubstring s 0 (1- (length s)))
-    ;;)
+    (substring s 0 (1- (length s)))
+    )
+  )
+
+
+(defun chomp (s) ; 文字列の最後の文字を除く
+  (let ((len (length s)))
+    (if (= len 0)
+	""
+      (substring s 0 (1- len)))
+    )
   )
 
 
@@ -48,83 +57,41 @@
   (interactive)
   (setq old (concat saved-recent-keys))
   (if (and (> (length old) 0) (string= (substring (concat (recent-keys)) -2) "\C-l\C-l"))
-      (insert *last-macro*)
-      ;;(execute-kbd-macro *last-macro*)
+      (progn
+	;;(insert *last-macro*)
+	(execute-kbd-macro *last-macro*)
+	)
     (setq new (chomp (concat (recent-keys))))
     (setq *last-macro* (get-postfix old new))
-    ;;(execute-kbd-macro *last-macro*)
-    (insert *last-macro*)
+    (execute-kbd-macro *last-macro*)
+    ;;(insert *last-macro*)
     )
   )
 
-aho
-
-abcabcabcabcabcabcabcabcabcabcabc
-
-abc[Iofabc
-
-old
-"
-
-
-[O"
-new
-"
-
-
-[O[Iofabc"
-
-dahkdah
-old
-"
-
-
-[O[Iofabcold
-new
-"
-newold
-new
-"
-
-
-[O[Iofabcold
-new
-kdahold
-new"
-ahoahoahoahoahoaho
-old
-"
-
-
-[O[Iofabcold
-new
-kdahold
-new
-"
-
-
-exec-macro
-
-exec-macro
-
-
-
-
-
-
 (global-set-key "\C-l" 'exec-macro)
 
+
+ahoahoaho
+
 (concat saved-recent-keys)
-
-ahoahoahoahoahoahoahoahoahoahoaho
-
-mensamensamensamensamensamensamensa
-
-manmanmanmanmanmanmanman
+(concat (recent-keys))
 
 
 
-maymay
-jayjayjayjayjayjayjayjayjay
+
+
+Lorem ipsum dolor sit amet, consectetur
+dipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna
+liqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris
+nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in
+reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla
+pariatur. Excepteur sint occaecat
+cupidatat non proident, sunt in culpa
+qui officia deserunt mollit anim id est
+laborum.
 
 
