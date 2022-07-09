@@ -43,7 +43,3 @@
 
 (global-set-key "\C-l" 'exec-macro)
 
-
-
-
-
