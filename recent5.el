@@ -1,8 +1,5 @@
 (setq *last-macro* "")
-(setq *keys-tail* "")
 (setq *old-recent* "")
-
-(setq buf ())
 
 (defun clear-kbd-macro ()
   (setq *last-macro* "")
@@ -57,8 +54,4 @@
   )
 
 (global-set-key "\C-l" 'exec-macro)
-
-
-
-
 
