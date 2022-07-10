@@ -51,9 +51,14 @@
   (interactive)
   (setq recent (concat (recent-keys)))
   (if (string= *last-macro* "")
-      (setq tail (get-postfix *old-recent* recent))
+      (setq *last-macro* (chomp (get-postfix *old-recent* recent)))
     )
+  (execute-kbd-macro *last-macro*)
   )
 
-
 (global-set-key "\C-l" 'exec-macro)
+
+
+
+
+
