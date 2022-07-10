@@ -34,7 +34,6 @@
     )
   )
 
-
 ;;
 ;; テスト
 ;;
@@ -68,6 +67,8 @@
    (string= (get-postfix in out) s3)
    )
  )
+
+(get-postfix "abcdefghijklmn" "ghijklmn12345678\C-l")
 
 
 

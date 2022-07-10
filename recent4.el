@@ -1,11 +1,19 @@
 (setq *last-macro* "")
 (setq *keys-tail* "")
 
+(setq buf ())
 
 (defun clear-kbd-macro ()
   (setq *last-macro* "")
   (let ((r (concat (recent-keys))))
-    (setq *keys-tail*(substring r (- (min 10 (length r)))))
+    (setq *keys-tail* (substring r (- (min 10 (length r)))))
+    (setq *keys-tail* (replace-regexp-in-string "" "" *keys-tail*))
+    (setq *keys-tail* (replace-regexp-in-string "
+" "" *keys-tail*))
+    (setq buf (append buf (list *keys-tail*)))
+    (while (> (length buf) 4)
+      (setq buf (cdr buf))
+      )
     )
   )
 
@@ -18,7 +26,7 @@
       (progn
 	;;(setq res (string-match (concat aaa "\C-l\\([^\C-l]*\\)\C-l$") recent))
 	;;(setq res (string-match (concat aaa "\C-@\\([^\C-l]*\\)\C-l$") recent))
-
+	
 	(setq i 1)
 	(setq res nil)
 	(while (and (not res) (<= i (length recent)))
@@ -44,5 +52,11 @@
     )
   )
 
+
 (global-set-key "\C-l" 'exec-macro)
+
+
+
+
+
 
