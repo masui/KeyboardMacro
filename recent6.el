@@ -13,7 +13,7 @@
   (setq *old-recent* (concat (recent-keys)))
   )
 
-(run-with-idle-timer 2 t 'clear-kbd-macro)
+(run-with-idle-timer 1 t 'clear-kbd-macro)
 
 ;;
 ;; "xyzabcdefg" と "abcdefghij" から "hij" を得る
@@ -68,7 +68,7 @@
   )
 
 
-(defun exec-macro () ;;; Ctrl-L で呼ばれる
+(defun exec-macro-yyy () ;;; Ctrl-L で呼ばれる
   (interactive)
   (setq recent (concat (recent-keys)))
   (if (string= (substring recent -2) "\C-l\C-l") ; 連打
@@ -84,6 +84,22 @@
       )
     )
   (execute-kbd-macro *last-macro*)
+  )
+
+(defun exec-macro () ;;; Ctrl-L で呼ばれる
+  (interactive)
+  (let ((recent (concat (recent-keys))))
+    (if (not (string= (substring recent -2) "\C-l\C-l")) ; 連打のときは何もしない
+	(progn
+	  (if (not (string= *last-macro* "")) ; 新規作成
+	    (setq *old-recent* *new-recent*)
+	    )
+	  (setq *last-macro* (chomp (get-postfix *old-recent* recent)))
+	  )
+      )
+    (setq *new-recent* recent)
+    (execute-kbd-macro *last-macro*)
+    )
   )
 
 (global-set-key "\C-l" 'exec-macro)
