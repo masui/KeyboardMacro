@@ -1,5 +1,5 @@
-(setq *last-macro* "")
-(setq *old-recent* "")
+(defvar *last-macro* "" "繰り返し文字列")
+(defvar *old-recent* "" "以前のrecent-keys")
 
 (defun clear-kbd-macro ()
   (setq *last-macro* "")
@@ -54,4 +54,10 @@
   )
 
 (global-set-key "\C-l" 'exec-macro)
+
+
+
+
+
+
 
