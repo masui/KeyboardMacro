@@ -72,28 +72,25 @@
   (interactive)
   (setq recent (concat (recent-keys)))
   (if (string= (substring recent -2) "\C-l\C-l") ; 連打
-      (progn
-	(setq *new-recent* recent)
-	(execute-kbd-macro *last-macro*)
-	)
+      (setq *new-recent* recent)
     (if (string= *last-macro* "") ; 新規作成
 	(progn
 	  (setq *new-recent* (concat (recent-keys)))
 	  (setq *last-macro* (chomp (get-postfix *old-recent* *new-recent*)))
-	  (execute-kbd-macro *last-macro*)
 	  )
       (setq *old-recent* *new-recent*)
       (setq *new-recent* (concat (recent-keys)))
       (setq *last-macro* (chomp (get-postfix *old-recent* *new-recent*)))
-      (execute-kbd-macro *last-macro*)
       )
     )
+  (execute-kbd-macro *last-macro*)
   )
 
 (global-set-key "\C-l" 'exec-macro)
 
-;;*new-recent*
-
+;;
+;; exec-macro の動作
+;;
 ;; キー操作      123456789*            時間待ちしたところ
 ;; *old-recent*  123456789             時間待ちで設定
 ;; *new-recent*       
@@ -128,3 +125,4 @@
 ;; *old-recent*         89 abcLLL      これをどう作る? *new-recent*をコピー?
 ;; *new-recent*            abcLLLdeL
 ;; *last-macro*                  de    引算+実行したい
+
