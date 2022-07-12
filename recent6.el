@@ -4,10 +4,6 @@
 (defvar *old-recent* "" "以前のrecent-keys")
 (defvar *new-recent* "" "recent-keys")
 
-
-;;(setq *last-macro* "")
-;;(setq *old-recent* "")
-
 (defun clear-kbd-macro ()
   (setq *last-macro* "")
   (setq *old-recent* (concat (recent-keys)))
@@ -50,48 +46,12 @@
       (substring s 0 (1- len))
       )))
 
-(defun exec-macro-xxx () ;;; Ctrl-L で呼ばれる
-  (interactive)
-  (setq *new-recent* (concat (recent-keys)))
-  (if (and (not (string= *last-macro* "")) (not (string= (substring *new-recent* -2) "\C-l\C-l")))
-  ;;(if (not (string= *last-macro* ""))
-      (progn
-	(setq *last-macro* (chomp (get-postfix *old-recent* *new-recent*)))
-	(setq *old-recent* *new-recent*)
-	)
-    (if (string= *last-macro* "")
-	(setq *last-macro* (chomp (get-postfix *old-recent* *new-recent*)))
-      )
-    )
-  ;;(setq *new-recent recent)
-  (execute-kbd-macro *last-macro*)
-  )
-
-
-(defun exec-macro-yyy () ;;; Ctrl-L で呼ばれる
-  (interactive)
-  (setq recent (concat (recent-keys)))
-  (if (string= (substring recent -2) "\C-l\C-l") ; 連打
-      (setq *new-recent* recent)
-    (if (string= *last-macro* "") ; 新規作成
-	(progn
-	  (setq *new-recent* (concat (recent-keys)))
-	  (setq *last-macro* (chomp (get-postfix *old-recent* *new-recent*)))
-	  )
-      (setq *old-recent* *new-recent*)
-      (setq *new-recent* (concat (recent-keys)))
-      (setq *last-macro* (chomp (get-postfix *old-recent* *new-recent*)))
-      )
-    )
-  (execute-kbd-macro *last-macro*)
-  )
-
 (defun exec-macro () ;;; Ctrl-L で呼ばれる
   (interactive)
   (let ((recent (concat (recent-keys))))
     (if (not (string= (substring recent -2) "\C-l\C-l")) ; 連打のときは何もしない
 	(progn
-	  (if (not (string= *last-macro* "")) ; 新規作成
+	  (if (not (string= *last-macro* "")) ; 新規作成じゃない場合
 	    (setq *old-recent* *new-recent*)
 	    )
 	  (setq *last-macro* (chomp (get-postfix *old-recent* recent)))
@@ -141,4 +101,12 @@
 ;; *old-recent*         89 abcLLL      これをどう作る? *new-recent*をコピー?
 ;; *new-recent*            abcLLLdeL
 ;; *last-macro*                  de    引算+実行したい
+
+(setq repeat-on-final-keystroke nil)
+
+
+
+
+
+
 
