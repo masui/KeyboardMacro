@@ -1,8 +1,10 @@
 (provide 'recent)
 
+(defconst *recent-key* "\C-l" "繰返し指定キー")
+
 (defvar *last-macro* "" "繰り返し文字列")
-(defvar *old-recent* "" "以前のrecent-keys")
-(defvar *new-recent* "" "recent-keys")
+(defvar *old-recent* "" "ちょっと前のrecent-keys")
+(defvar *new-recent* "" "最新のrecent-keys")
 
 (defun clear-kbd-macro ()
   (setq *last-macro* "")
@@ -16,24 +18,16 @@
 ;;
 (defun get-postfix (s1 s2)
   (let (
-	(i 0)
-	(len1 (length s1))
-	(len2 (length s2))
-	(finished nil)
-	(res "")
-	(p "")
-	(s "")
+	(len1 (length s1)) (len2 (length s2))
+	(found nil) (i 0) (res "")
 	)
-    (while (and (< i len2) (not finished))
-      (setq s (substring s2 0 (- len2 i)))
-      (setq p (substring s1 (- (min len1 (length s)))))
-      (if (string= s p)
-	  (progn
-	    (setq finished t)
-	    (setq res (substring s2 (- i)))
-	    )
-	(setq i (1+ i))
+    (while (and (< i len2) (not found))
+      (let* ((s (substring s2 0 (- len2 i)))
+	     (p (substring s1 (- (min len1 (length s))))))
+	(setq found (string= s p))
+	(if found (setq res (substring s2 (- i))))
 	)
+      (setq i (1+ i))
       )
     res
     )
@@ -41,15 +35,14 @@
 
 (defun chomp (s) ; 文字列の最後の文字を除く
   (let ((len (length s)))
-    (if (= len 0)
-	""
-      (substring s 0 (1- len))
-      )))
+    (if (= len 0) ""  (substring s 0 (1- len)))
+    )
+  )
 
 (defun exec-macro () ;;; Ctrl-L で呼ばれる
   (interactive)
   (let ((recent (concat (recent-keys))))
-    (if (not (string= (substring recent -2) "\C-l\C-l")) ; 連打のときは何もしない
+    (if (not (string= (substring recent -2) (concat *recent-key* *recent-key*))) ; 連打のときは何もしない
 	(progn
 	  (if (not (string= *last-macro* "")) ; 新規作成じゃない場合
 	    (setq *old-recent* *new-recent*)
@@ -62,7 +55,7 @@
     )
   )
 
-(global-set-key "\C-l" 'exec-macro)
+(global-set-key *recent-key* 'exec-macro)
 
 ;;
 ;; exec-macro の動作
@@ -101,12 +94,4 @@
 ;; *old-recent*         89 abcLLL      これをどう作る? *new-recent*をコピー?
 ;; *new-recent*            abcLLLdeL
 ;; *last-macro*                  de    引算+実行したい
-
-(setq repeat-on-final-keystroke nil)
-
-
-
-
-
-
 
